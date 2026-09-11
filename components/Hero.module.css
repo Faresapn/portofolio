@@ -1,0 +1,194 @@
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto 1fr auto auto;
+  padding: 88px var(--gutter) calc(var(--bar) + 28px);
+  overflow: hidden;
+}
+
+/* Viewfinder crop marks */
+.corners i {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--fg-3);
+  border-style: solid;
+  border-width: 0;
+  pointer-events: none;
+}
+.corners i:nth-child(1) {
+  top: 68px;
+  left: calc(var(--gutter) - 12px);
+  border-top-width: 1px;
+  border-left-width: 1px;
+}
+.corners i:nth-child(2) {
+  top: 68px;
+  right: calc(var(--gutter) - 12px);
+  border-top-width: 1px;
+  border-right-width: 1px;
+}
+.corners i:nth-child(3) {
+  bottom: calc(var(--bar) + 12px);
+  left: calc(var(--gutter) - 12px);
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+}
+.corners i:nth-child(4) {
+  bottom: calc(var(--bar) + 12px);
+  right: calc(var(--gutter) - 12px);
+  border-bottom-width: 1px;
+  border-right-width: 1px;
+}
+
+.top {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+}
+.top > :nth-child(1) {
+  grid-column: 1 / span 4;
+}
+.top > :nth-child(2) {
+  grid-column: 5 / span 4;
+}
+.top > :nth-child(3) {
+  grid-column: 9 / -1;
+  justify-self: end;
+}
+
+/* Sized by whichever runs out first, width or height; the letters then
+   spread to the full measure like a film title card. */
+.name {
+  align-self: end;
+  width: 100%;
+  margin: 0 0 clamp(20px, 3.5vh, 40px);
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: max(5rem, min(calc((100vw - 2 * var(--gutter)) / var(--name-ratio, 3.12)), calc((100svh - 430px) * 1.25)));
+  line-height: 0.86;
+  white-space: nowrap;
+  user-select: none;
+  letter-spacing: -0.045em;
+}
+
+.nameInner {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  will-change: transform;
+}
+
+/* Each letter sits in its own mask so the intro can rise out of it. */
+.cell {
+  display: inline-block;
+  overflow: hidden;
+  padding-top: 0.06em;
+  margin-top: -0.06em;
+}
+
+/* Each letter owns a hue; it only shows as the letter thickens (--pull 0→1). */
+.letter {
+  display: inline-block;
+  font-weight: 500;
+  color: color-mix(in oklab, var(--c) calc(var(--pull, 0) * 100%), var(--fg));
+}
+
+/* Colour bars — the reel's test pattern, and the palette the site uses. */
+.bars {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  height: 5px;
+  margin-bottom: 22px;
+}
+.bars i {
+  background: var(--c);
+  transform-origin: left;
+}
+
+.foot {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  row-gap: 24px;
+  align-items: end;
+}
+
+.who {
+  grid-column: 1 / span 3;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.full {
+  font-family: var(--f-display);
+  font-weight: 650;
+  font-size: clamp(20px, 1.6vw, 26px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.statement {
+  grid-column: 4 / span 6;
+  font-family: var(--f-serif);
+  font-weight: 400;
+  font-size: clamp(26px, 2.5vw, 42px);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  max-width: 24ch;
+  text-wrap: balance;
+}
+.statement span {
+  color: var(--amber);
+  font-style: italic;
+}
+
+.meta {
+  grid-column: 10 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  text-align: right;
+}
+
+.current {
+  max-width: 24ch;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.cue {
+  margin-top: 8px;
+  color: var(--fg);
+}
+
+@media (max-width: 900px) {
+  .hero {
+    padding-top: 80px;
+  }
+  .top > :nth-child(1) {
+    grid-column: 1 / span 6;
+  }
+  .top > :nth-child(2) {
+    display: none;
+  }
+  .top > :nth-child(3) {
+    grid-column: 7 / -1;
+  }
+  .who {
+    grid-column: 1 / -1;
+  }
+  .statement {
+    grid-column: 1 / -1;
+    font-size: clamp(30px, 7.4vw, 44px);
+  }
+  .meta {
+    grid-column: 1 / -1;
+    align-items: flex-start;
+    text-align: left;
+  }
+}

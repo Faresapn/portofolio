@@ -1,0 +1,151 @@
+.toolkit {
+  padding-bottom: clamp(96px, 16vh, 180px);
+}
+
+.rows {
+  border-bottom: 1px solid var(--line);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  padding: 22px 14px;
+  margin: 0 -14px;
+  border-top: 1px solid var(--line);
+  transition:
+    opacity 0.3s var(--ease),
+    background 0.3s var(--ease);
+}
+
+/* Hovering one row lights it in its colour and quiets the others. */
+@media (hover: hover) {
+  .rows:hover .row {
+    opacity: 0.35;
+  }
+  .rows .row:hover {
+    opacity: 1;
+    background: color-mix(in oklab, var(--c) 32%, var(--bg));
+  }
+}
+
+.row dt {
+  grid-column: 1 / span 3;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  align-self: start;
+  padding-top: 6px;
+}
+
+.swatch {
+  width: 14px;
+  height: 14px;
+  background: var(--c-deep);
+}
+
+.group {
+  font-family: var(--f-sans);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+}
+
+.row dd {
+  grid-column: 4 / -1;
+  font-size: clamp(20px, 1.9vw, 30px);
+  font-weight: 300;
+  line-height: 1.35;
+  letter-spacing: -0.005em;
+}
+
+.sep {
+  color: var(--c-deep);
+}
+
+/* ─── Credential cards: solid colour on paper ────────────────────────────── */
+
+.creds {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  padding-top: clamp(64px, 10vh, 112px);
+}
+
+.cred {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  min-height: 280px;
+  padding: 24px;
+  background: var(--c);
+  color: var(--ink);
+}
+
+.credLabel {
+  font-family: var(--f-sans);
+  font-size: 13.5px;
+  letter-spacing: 0.005em;
+  font-weight: 500;
+}
+
+.credTitle {
+  margin-top: auto;
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: clamp(32px, 2.8vw, 46px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.credSub {
+  font-size: 16px;
+}
+.credMeta {
+  font-family: var(--f-sans);
+  font-size: 14px;
+  letter-spacing: 0.005em;
+  font-weight: 500;
+}
+
+.certs {
+  width: 100%;
+  margin-top: auto;
+}
+.certs li {
+  padding: 9px 0;
+  border-top: 1px solid rgba(11, 10, 8, 0.2);
+  font-size: 16px;
+}
+
+.credLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  margin-top: 4px;
+  font-family: var(--f-sans);
+  font-size: 14px;
+  letter-spacing: 0.005em;
+  border-bottom: 1px solid currentColor;
+  font-weight: 500;
+}
+
+@media (max-width: 900px) {
+  .row dt,
+  .row dd {
+    grid-column: 1 / -1;
+  }
+  .row dd {
+    margin-top: 10px;
+  }
+  .creds {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cred {
+    min-height: 0;
+  }
+  .credTitle {
+    margin-top: 24px;
+  }
+}

@@ -1,0 +1,373 @@
+/* ─── Tokens ─────────────────────────────────────────────────────────────── */
+
+:root {
+  --ink: #0b0a08;
+  --ink-1: #11100d;
+  --ink-2: #181613;
+  --ink-3: #221f1b;
+  --bone: #ede7db;
+  --bone-2: #b4ad9f;
+  --bone-3: #857e71;
+  --rule: rgba(237, 231, 219, 0.1);
+  --rule-2: rgba(237, 231, 219, 0.2);
+  --signal: #ff4f1f;
+  --signal-deep: #a8300f;
+  --signal-tint: #2a1109;
+
+  /* Clip-label colours (OKLCH L .80 / .44 / .24, one hue each). Light = on
+     dark grounds, deep = on paper, tint = card grounds under light text. */
+  --teal: #55d6c7;
+  --teal-deep: #006259;
+  --teal-tint: #072521;
+  --blue: #8ac1ff;
+  --blue-deep: #2e5483;
+  --blue-tint: #142030;
+  --violet: #c9adfd;
+  --violet-deep: #5a467d;
+  --violet-tint: #221b2d;
+  --rose: #f89ec1;
+  --rose-deep: #783c55;
+  --rose-tint: #2c1820;
+  --amber: #eeb154;
+  --amber-deep: #6f4a06;
+  --amber-tint: #291d0b;
+  --green: #96d089;
+  --green-deep: #365e2d;
+  --green-tint: #162313;
+
+  /* Semantic tokens. Each section's ground can redefine them. */
+  --bg: var(--ink);
+  --fg: var(--bone);
+  --fg-2: var(--bone-2);
+  --fg-3: var(--bone-3);
+  --line: var(--rule);
+  --line-2: var(--rule-2);
+  --c: var(--signal);
+  --c-deep: var(--signal-deep);
+  --c-tint: var(--signal-tint);
+
+  --gutter: clamp(20px, 3.2vw, 48px);
+  --bar: 52px;
+  --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
+  --ease-io: cubic-bezier(0.7, 0, 0.2, 1);
+
+  --z-header: 30;
+  --z-bar: 40;
+  --z-grain: 45;
+  --z-cursor: 50;
+  --z-modal: 100;
+  --z-skip: 110;
+
+  /* Schibsted Grotesk for headings and text, Newsreader for the few lines
+     that speak in first person, Plex Mono only for technical readouts. */
+  --f-display: var(--font-schibsted), 'Helvetica Neue', Arial, sans-serif;
+  --f-sans: var(--font-schibsted), 'Helvetica Neue', Arial, sans-serif;
+  --f-serif: var(--font-newsreader), Georgia, 'Times New Roman', serif;
+  --f-mono: var(--font-plex-mono), ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  color-scheme: dark;
+}
+
+@media (max-width: 720px) {
+  :root {
+    --bar: 46px;
+  }
+}
+
+/* ─── Grounds: every chapter is graded differently ───────────────────────── */
+
+.ground-ink,
+.ground-teal,
+.ground-umber,
+.ground-paper,
+.ground-signal {
+  --surface: color-mix(in oklab, var(--fg) 4%, var(--bg));
+  --surface-2: color-mix(in oklab, var(--fg) 8%, var(--bg));
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.ground-teal {
+  --bg: #071d1e;
+  --fg-3: #978f81;
+  --line: rgba(160, 230, 222, 0.12);
+  --line-2: rgba(160, 230, 222, 0.22);
+}
+
+.ground-umber {
+  --bg: #1f150c;
+  --fg-3: #978f81;
+  --line: rgba(238, 200, 150, 0.12);
+  --line-2: rgba(238, 200, 150, 0.22);
+}
+
+.ground-paper {
+  --bg: var(--bone);
+  --fg: var(--ink);
+  --fg-2: #4d473e;
+  --fg-3: #5c554a;
+  --line: rgba(11, 10, 8, 0.12);
+  --line-2: rgba(11, 10, 8, 0.24);
+  color-scheme: light;
+}
+
+.ground-signal {
+  --bg: var(--signal);
+  --fg: var(--ink);
+  --fg-2: #2a1208;
+  --fg-3: #3b1608;
+  --line: rgba(11, 10, 8, 0.2);
+  --line-2: rgba(11, 10, 8, 0.36);
+  color-scheme: light;
+}
+.ground-signal ::selection {
+  background: var(--ink);
+  color: var(--signal);
+}
+.ground-signal :focus-visible {
+  outline-color: var(--ink);
+}
+
+/* ─── Base ───────────────────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  background: var(--ink);
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--f-sans);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+main {
+  padding-bottom: var(--bar);
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+figure,
+dl,
+dd {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+::selection {
+  background: var(--signal);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+/* ─── Lenis ──────────────────────────────────────────────────────────────── */
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped,
+html.is-locked {
+  overflow: hidden;
+}
+
+/* ─── Primitives ─────────────────────────────────────────────────────────── */
+
+.label {
+  font-family: var(--f-sans);
+  font-size: 13.5px;
+  line-height: 1.45;
+  letter-spacing: 0.005em;
+  color: var(--fg-3);
+  font-weight: 500;
+}
+
+.wrap {
+  padding-inline: var(--gutter);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip {
+  position: fixed;
+  left: var(--gutter);
+  top: 12px;
+  z-index: var(--z-skip);
+  transform: translateY(-160%);
+  background: var(--signal);
+  color: var(--ink);
+  padding: 12px 16px;
+  font-family: var(--f-sans);
+  font-size: 14px;
+  letter-spacing: 0.005em;
+  transition: transform 0.25s var(--ease);
+  font-weight: 500;
+}
+.skip:focus {
+  transform: none;
+}
+
+/* Section heads share one rhythm: index, rule, title, note. */
+.sec-head {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  row-gap: 28px;
+  padding: clamp(96px, 16vh, 180px) var(--gutter) clamp(48px, 8vh, 96px);
+}
+.sec-index {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.sec-index::after {
+  content: '';
+  order: 1;
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+.sec-index > * + * {
+  order: 2;
+}
+.sec-title {
+  grid-column: 1 / span 8;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: clamp(52px, 8.4vw, 140px);
+  line-height: 0.94;
+  letter-spacing: -0.045em;
+}
+.sec-title em {
+  font-style: normal;
+  color: var(--em, var(--signal));
+}
+.sec-note {
+  grid-column: 9 / -1;
+  align-self: end;
+  max-width: 34ch;
+  color: var(--fg-2);
+  font-size: 17px;
+  line-height: 1.55;
+}
+@media (max-width: 900px) {
+  .sec-title,
+  .sec-note {
+    grid-column: 1 / -1;
+  }
+}
+
+/* A small arrow-link used across sections */
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  font-family: var(--f-sans);
+  font-size: 14px;
+  letter-spacing: 0.005em;
+  color: var(--fg);
+  border-bottom: 1px solid var(--line-2);
+  transition:
+    color 0.2s var(--ease),
+    border-color 0.2s var(--ease);
+  font-weight: 500;
+}
+.link-arrow:hover {
+  color: var(--em, var(--signal));
+  border-color: currentColor;
+}
+
+/* ─── Film grain — static, cheap, above content but below dialogs ────────── */
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-grain);
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ─── Motion gates ───────────────────────────────────────────────────────── */
+
+.js [data-intro] {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-intro] {
+    opacity: 1;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,105 @@
+.header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: var(--z-header);
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  align-items: center;
+  padding: 10px var(--gutter);
+  font-family: var(--f-sans);
+  font-size: 13.5px;
+  letter-spacing: 0.005em;
+  color: var(--bone);
+  transition: color 0.3s var(--ease);
+  font-weight: 500;
+}
+
+/* A fade in the colour of the section underneath keeps the header legible. */
+.header::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 -28px 0;
+  z-index: -1;
+  background: linear-gradient(to bottom, var(--ground) 45%, transparent);
+  pointer-events: none;
+}
+
+.light {
+  color: var(--ink);
+}
+
+.mark,
+.nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  width: fit-content;
+  transition: opacity 0.2s var(--ease);
+}
+.mark:hover,
+.nav a:hover {
+  opacity: 0.6;
+}
+
+.mark {
+  grid-column: 1 / span 3;
+}
+
+.role {
+  grid-column: 4 / span 4;
+  opacity: 0.72;
+}
+
+.nav {
+  grid-column: 8 / span 3;
+  display: flex;
+  gap: 24px;
+}
+.cv {
+  gap: 6px;
+}
+
+.clock {
+  grid-column: 11 / -1;
+  justify-self: end;
+  display: flex;
+  gap: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.city {
+  opacity: 0.72;
+}
+
+@media (max-width: 900px) {
+  .role,
+  .city {
+    display: none;
+  }
+  .mark {
+    grid-column: 1 / span 5;
+  }
+  .nav {
+    grid-column: 6 / span 4;
+  }
+  .clock {
+    grid-column: 10 / -1;
+  }
+}
+
+@media (max-width: 520px) {
+  .cv {
+    display: none !important;
+  }
+  .mark {
+    grid-column: 1 / span 6;
+  }
+  .nav {
+    grid-column: 7 / span 3;
+  }
+  .clock {
+    grid-column: 10 / -1;
+  }
+}

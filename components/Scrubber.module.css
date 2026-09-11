@@ -1,0 +1,269 @@
+.bar {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: var(--z-bar);
+  height: var(--bar);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  background: var(--ink);
+  border-top: 1px solid var(--rule-2);
+  font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Readouts ───────────────────────────────────────────────────────────── */
+
+.readouts {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 18px 0 var(--gutter);
+  border-right: 1px solid var(--rule);
+}
+
+.rec {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--bone-3);
+  transition:
+    background 0.2s var(--ease),
+    box-shadow 0.2s var(--ease);
+}
+.bar:has(.status[data-live='true']) .rec {
+  background: var(--c);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--c) 22%, transparent);
+}
+
+.tc {
+  min-width: 11ch;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--bone);
+}
+
+.status {
+  min-width: 10ch;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bone-3);
+  white-space: nowrap;
+}
+.status[data-live='true'] {
+  color: var(--bone);
+}
+
+/* ─── Ruler ──────────────────────────────────────────────────────────────── */
+
+.ruler {
+  position: relative;
+  margin: 0 18px;
+  overflow: hidden;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+}
+.ruler:focus-visible {
+  outline-offset: -2px;
+}
+
+.ticks {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--bone-3) 1px, transparent 1px),
+    linear-gradient(to right, var(--rule-2) 1px, transparent 1px);
+  background-size:
+    10% 12px,
+    1% 6px;
+  background-repeat: repeat-x;
+  background-position:
+    left bottom,
+    left bottom;
+}
+
+.played {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in oklab, var(--c) 16%, transparent);
+  transition: background 0.5s var(--ease);
+  transform: scaleX(var(--p));
+  transform-origin: left;
+}
+
+.marker {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: flex-start;
+  padding: 6px 10px 0 7px;
+  border-left: 1px solid var(--bone-3);
+  font-family: var(--f-sans);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--bone-3);
+  white-space: nowrap;
+  transition:
+    color 0.2s var(--ease),
+    border-color 0.2s var(--ease);
+}
+.marker:hover,
+.markerOn {
+  color: var(--c);
+  border-color: var(--c);
+}
+/* Near the right edge the label hangs to the left of its line instead. */
+.markerEnd {
+  transform: translateX(-100%);
+  padding: 7px 7px 0 10px;
+  border-left: 0;
+  border-right: 1px solid var(--bone-3);
+}
+.markerEnd:hover,
+.markerEnd.markerOn {
+  border-color: var(--c);
+}
+
+/* Only the current (or hovered) chapter spells out its name. */
+.markerName {
+  display: none;
+  margin-left: 8px;
+}
+.marker:hover {
+  z-index: 2;
+  background: var(--ink);
+}
+.marker:hover .markerName,
+.markerOn .markerName {
+  display: inline;
+}
+
+.headTrack {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transform: translateX(calc(var(--p) * 100% - var(--p) * 1px));
+  will-change: transform;
+}
+.head {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: var(--signal);
+}
+.head::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -5px;
+  border: 5px solid transparent;
+  border-top: 7px solid var(--signal);
+}
+
+/* ─── Chapter menu ───────────────────────────────────────────────────────── */
+
+.chapterWrap {
+  position: relative;
+  border-left: 1px solid var(--rule);
+}
+
+.chapter {
+  height: 100%;
+  min-width: 160px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 var(--gutter) 0 18px;
+  font-family: var(--f-sans);
+  font-size: 13.5px;
+  letter-spacing: 0.005em;
+  color: var(--bone);
+  font-weight: 500;
+}
+.chapterNo {
+  color: var(--c);
+}
+.caret {
+  margin-left: auto;
+  font-size: 10px;
+  color: var(--bone-3);
+  transition: transform 0.25s var(--ease);
+}
+.chapter[aria-expanded='true'] .caret {
+  transform: rotate(180deg);
+}
+
+.menu {
+  position: absolute;
+  right: 8px;
+  bottom: calc(100% + 8px);
+  min-width: 240px;
+  padding: 14px 10px 10px;
+  background: var(--ink-1);
+  box-shadow:
+    0 0 0 1px var(--rule-2),
+    0 24px 60px rgba(0, 0, 0, 0.55);
+}
+.menu > :global(.label) {
+  padding: 0 10px 8px;
+}
+.menu button {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 46px;
+  padding: 0 10px;
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: 22px;
+  text-align: left;
+  color: var(--bone-2);
+  transition:
+    color 0.2s var(--ease),
+    background 0.2s var(--ease);
+  letter-spacing: -0.03em;
+}
+.menu button:hover {
+  color: var(--bone);
+  background: var(--ink-2);
+}
+.menu button :global(.label) {
+  color: var(--c);
+}
+.menu button[aria-current='true'] {
+  color: var(--c);
+}
+
+@media (max-width: 900px) {
+  .status {
+    display: none;
+  }
+  .marker {
+    font-size: 0;
+  }
+  .marker {
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .readouts {
+    gap: 10px;
+    padding-right: 12px;
+  }
+  .tc {
+    font-size: 12px;
+  }
+  .ruler {
+    margin: 0 12px;
+  }
+  .chapter {
+    min-width: 0;
+    padding-left: 14px;
+  }
+}

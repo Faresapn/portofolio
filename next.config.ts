@@ -1,0 +1,16 @@
+import type { NextConfig } from 'next';
+
+const nextConfig: NextConfig = {
+  reactStrictMode: true,
+  devIndicators: false,
+  async headers() {
+    return [
+      {
+        source: '/previews/:file*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
+    ];
+  },
+};
+
+export default nextConfig;

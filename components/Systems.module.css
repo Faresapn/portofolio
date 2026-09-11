@@ -1,0 +1,414 @@
+.systems {
+  position: relative;
+  padding-bottom: clamp(96px, 16vh, 180px);
+}
+
+/* ─── Pipeline: pinned, scroll-driven ────────────────────────────────────── */
+
+.run {
+  position: relative;
+  height: 290vh;
+}
+
+.pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 24px;
+  padding: 84px var(--gutter) calc(var(--bar) + 28px);
+}
+
+.pipeHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.pipeTitle {
+  margin-top: 10px;
+  font-family: var(--f-display);
+  font-weight: 650;
+  font-size: clamp(40px, 4.4vw, 76px);
+  line-height: 0.96;
+  letter-spacing: -0.03em;
+}
+.pipeDesc {
+  margin-top: 12px;
+  max-width: 52ch;
+  color: var(--fg-2);
+}
+
+.stepRead {
+  color: var(--fg-2);
+  white-space: nowrap;
+}
+.stepRead b {
+  font-weight: 500;
+  color: var(--c);
+}
+
+.graph {
+  --gap: 14px;
+  align-self: center;
+  display: grid;
+  grid-template-rows: auto auto;
+}
+
+.nodes {
+  grid-row: 1;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.node {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: clamp(120px, 18vh, 170px);
+  padding: 16px;
+  color: var(--fg-3);
+  background: color-mix(in oklab, var(--c) 5%, transparent);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+  transition:
+    background 0.35s var(--ease),
+    box-shadow 0.35s var(--ease),
+    color 0.35s var(--ease);
+}
+.nodeNo {
+  font-family: var(--f-sans);
+  font-size: 13.5px;
+  letter-spacing: 0.005em;
+  font-weight: 500;
+}
+.nodeName {
+  margin-top: auto;
+  font-family: var(--f-display);
+  font-weight: 650;
+  font-size: clamp(26px, 2.3vw, 40px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.nodeLog {
+  display: none;
+}
+.nodeOn {
+  color: var(--c);
+  background: var(--c-tint);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--c) 60%, transparent);
+}
+.nodeNow {
+  background: var(--c);
+  color: var(--ink);
+  box-shadow: none;
+}
+
+/* Track runs from the first node's centre to the last one's; the part
+   already run blends through every node's colour. */
+.track {
+  grid-row: 2;
+  position: relative;
+  height: 3px;
+  margin: 26px calc((100% - 5 * var(--gap)) / 12) 0;
+  background: var(--line-2);
+}
+.fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--blue), var(--violet), var(--rose), var(--amber), var(--green), var(--teal));
+  clip-path: inset(0 calc((1 - var(--p)) * 100%) 0 0);
+}
+.track i {
+  position: absolute;
+  left: calc(var(--k) * 100%);
+  top: -7px;
+  width: 1px;
+  height: 17px;
+  background: var(--fg-3);
+}
+.track i.tickOn {
+  background: var(--fg);
+}
+.packet {
+  position: absolute;
+  top: 50%;
+  left: calc(var(--p) * 100%);
+  width: 13px;
+  height: 13px;
+  background: var(--c);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--c) 25%, transparent);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.lower {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: calc(var(--gutter) * 1.75);
+  align-items: end;
+}
+
+.console {
+  padding: 14px 18px;
+  background: rgba(0, 0, 0, 0.28);
+  box-shadow: inset 0 0 0 1px var(--line);
+  font-family: var(--f-mono);
+  font-size: 13px;
+  line-height: 1.95;
+}
+.console ol {
+  margin-top: 6px;
+}
+.console li {
+  display: grid;
+  grid-template-columns: 14px 30px 90px minmax(0, 1fr);
+  color: var(--fg-3);
+  opacity: 0.4;
+  transition: opacity 0.3s var(--ease);
+}
+.console li.logOn {
+  opacity: 1;
+  color: var(--fg-2);
+}
+.console li.logOn .key,
+.mark {
+  color: var(--c);
+}
+
+.facts {
+  display: grid;
+  gap: 20px;
+}
+.facts p {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+/* ─── Agents ─────────────────────────────────────────────────────────────── */
+
+.agents {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: calc(var(--gutter) * 1.25);
+  padding-top: clamp(96px, 16vh, 180px);
+}
+
+.blockTitle {
+  margin: 12px 0 12px;
+  font-family: var(--f-display);
+  font-weight: 650;
+  font-size: clamp(40px, 4vw, 66px);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+}
+.blockIntro {
+  max-width: 40ch;
+  color: var(--fg-2);
+}
+
+.agentGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.agent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 210px;
+  padding: 22px 22px 24px;
+  background: var(--c-tint);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--c) 25%, transparent);
+  transition:
+    transform 0.4s var(--ease),
+    box-shadow 0.4s var(--ease);
+}
+.agent::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--c);
+}
+@media (hover: hover) {
+  .agent:hover {
+    transform: translateY(-4px);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--c) 60%, transparent);
+  }
+}
+.agentCode {
+  font-family: var(--f-mono);
+  font-size: 12px;
+  color: var(--c);
+}
+.agentCode i {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: var(--c);
+  vertical-align: 1px;
+}
+.agentTitle {
+  margin-top: auto;
+  padding-top: 36px;
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: clamp(28px, 2.3vw, 38px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.agentBody {
+  margin-top: 10px;
+  font-size: 15.5px;
+  color: var(--fg-2);
+}
+
+/* OpenClaw: one solid colour card to close the section */
+.claw {
+  align-self: start;
+  padding: 26px 26px 18px;
+  background: var(--c);
+  color: var(--ink);
+}
+.claw :global(.label),
+.claw .blockIntro {
+  color: rgba(11, 10, 8, 0.72);
+}
+.watchLabel {
+  margin-top: 26px;
+}
+.watch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+.watch li {
+  padding: 9px 14px;
+  font-family: var(--f-sans);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+  background: var(--ink);
+  color: var(--c);
+}
+.points {
+  margin-top: 24px;
+}
+.points li {
+  padding: 14px 0;
+  border-top: 1px solid rgba(11, 10, 8, 0.22);
+  font-size: 16.5px;
+}
+
+@media (max-width: 1023px) {
+  .agents,
+  .lower {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .run {
+    height: 240vh;
+  }
+  .pin {
+    padding-top: 72px;
+    gap: 16px;
+  }
+  .pipeHead {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 14px;
+  }
+  .pipeTitle {
+    font-size: 30px;
+  }
+  .pipeDesc {
+    font-size: 14.5px;
+    line-height: 1.45;
+  }
+  .graph {
+    --gap: 8px;
+    grid-template-columns: 22px minmax(0, 1fr);
+    grid-template-rows: auto;
+    align-self: start;
+  }
+  .nodes {
+    grid-column: 2;
+    grid-row: 1;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .node {
+    min-height: 0;
+    height: clamp(50px, 7.4svh, 64px);
+    padding: 8px 12px;
+    display: grid;
+    grid-template-columns: 30px minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    column-gap: 10px;
+    row-gap: 0;
+    align-content: center;
+  }
+  .nodeNo {
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+  .nodeName {
+    margin: 0;
+    font-size: 22px;
+  }
+  .nodeLog {
+    display: block;
+    font-size: 12.5px;
+    line-height: 1.35;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0.85;
+  }
+  .track {
+    grid-column: 1;
+    grid-row: 1;
+    width: 3px;
+    height: auto;
+    margin: calc(clamp(50px, 7.4svh, 64px) / 2) 0;
+    justify-self: center;
+  }
+  .fill {
+    background: linear-gradient(180deg, var(--blue), var(--violet), var(--rose), var(--amber), var(--green), var(--teal));
+    clip-path: inset(0 0 calc((1 - var(--p)) * 100%) 0);
+  }
+  .track i {
+    left: -7px;
+    top: calc(var(--k) * 100%);
+    width: 17px;
+    height: 1px;
+  }
+  .packet {
+    top: calc(var(--p) * 100%);
+    left: 50%;
+  }
+  /* Phones: the nodes carry their own log line; the rest would not fit the pin. */
+  .lower {
+    display: none;
+  }
+  .agentGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .agent {
+    min-height: 0;
+  }
+}
