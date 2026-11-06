@@ -1,6 +1,5 @@
 'use client';
 
-import { useRef, useState } from 'react';
 import { profile } from '@/lib/content';
 import { scrollToTarget } from '@/lib/scroll';
 import s from './Credits.module.css';
@@ -9,23 +8,11 @@ const COLOPHON: [string, string][] = [
   ['Designed & built by', profile.name],
   ['Built with', 'Next.js · GSAP · Lenis'],
   ['Typefaces', 'Schibsted Grotesk · Newsreader · IBM Plex Mono'],
-  ['Project previews', 'Screen recordings of the live sites'],
+  ['Project previews', 'Screen recordings of the live sites and dashboards'],
+  ['AI videos', 'Generated and directed by me'],
 ];
 
 export default function Credits() {
-  const [copied, setCopied] = useState(false);
-  const timer = useRef<number | undefined>(undefined);
-
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(profile.email);
-      setCopied(true);
-      window.clearTimeout(timer.current);
-      timer.current = window.setTimeout(() => setCopied(false), 2400);
-    } catch {
-      window.location.href = `mailto:${profile.email}`;
-    }
-  };
 
   return (
     <section
@@ -37,11 +24,11 @@ export default function Credits() {
     >
       <div className={s.top}>
         <p className="sec-index label">
-          <span>06 — Contact</span>
+          <span>07 — Contact</span>
           <span>Jakarta · UTC+7</span>
         </p>
         <h2 id="contact-title" className={s.ask} data-split>
-          Have an AI agent, an automation or a website in mind?
+          Have an AI agent, an AI video or a website in mind?
         </h2>
         <p className={s.sub} data-reveal>
           Tell me what you’re building. Email is the fastest way to reach me.
@@ -54,30 +41,35 @@ export default function Credits() {
           <wbr />
           {profile.email.split('@')[1]}
         </a>
-        <button type="button" className={s.copy} onClick={copy}>
-          <span aria-live="polite">{copied ? 'Copied ✓' : 'Copy address'}</span>
-        </button>
+        <a className={s.sendBtn} href={`mailto:${profile.email}`}>
+          <span>Send Email</span>
+          <span aria-hidden>→</span>
+        </a>
       </div>
 
       <ul className={s.links}>
         <li>
-          <a className="link-arrow" href={profile.linkedin} target="_blank" rel="noopener">
-            LinkedIn <span aria-hidden>↗</span>
+          <a className={s.linkCard} href={profile.linkedin} target="_blank" rel="noopener">
+            <span className={s.linkName}>LinkedIn</span>
+            <span className={s.linkArrow} aria-hidden>↗</span>
           </a>
         </li>
         <li>
-          <a className="link-arrow" href={profile.github} target="_blank" rel="noopener">
-            GitHub <span aria-hidden>↗</span>
+          <a className={s.linkCard} href={profile.github} target="_blank" rel="noopener">
+            <span className={s.linkName}>GitHub</span>
+            <span className={s.linkArrow} aria-hidden>↗</span>
           </a>
         </li>
         <li>
-          <a className="link-arrow" href={profile.cv} target="_blank" rel="noopener">
-            Résumé (PDF) <span aria-hidden>↗</span>
+          <a className={s.linkCard} href={profile.cv} target="_blank" rel="noopener">
+            <span className={s.linkName}>Resume</span>
+            <span className={s.linkArrow} aria-hidden>↗</span>
           </a>
         </li>
         <li>
-          <a className="link-arrow" href={profile.paper} target="_blank" rel="noopener">
-            Research paper <span aria-hidden>↗</span>
+          <a className={s.linkCard} href={profile.paper} target="_blank" rel="noopener">
+            <span className={s.linkName}>Research paper</span>
+            <span className={s.linkArrow} aria-hidden>↗</span>
           </a>
         </li>
       </ul>

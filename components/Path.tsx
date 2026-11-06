@@ -4,17 +4,17 @@ import { useState } from 'react';
 import { clips, hue, tracks, type Clip, type Hue } from '@/lib/content';
 import s from './Path.module.css';
 
-// Timeline axis in months, Oct 2019 → Jan 2027.
+// Timeline axis in months, Oct 2020 → Jan 2027.
 const month = (ym: string) => {
   const [y, m] = ym.split('-').map(Number);
   return y * 12 + (m - 1);
 };
-const START = month('2019-10');
+const START = month('2020-10');
 const END = month('2027-01');
 const NOW = month('2026-09') + 0.35;
 const SPAN = END - START;
 const pct = (m: number) => ((m - START) / SPAN) * 100;
-const YEARS = [2020, 2021, 2022, 2023, 2024, 2025, 2026];
+const YEARS = [2021, 2022, 2023, 2024, 2025, 2026];
 
 const clipBox = (c: Clip) => {
   const from = month(c.from);
@@ -61,22 +61,22 @@ export default function Path() {
     >
       <header className="sec-head">
         <p className="sec-index label">
-          <span>04 — Experience</span>
-          <span>2019 → today</span>
+          <span>05 — Experience</span>
+          <span>2020 → today</span>
         </p>
         <h2 id="path-title" className="sec-title" data-split>
           Experience
         </h2>
         <p className="sec-note" data-reveal>
-          Android intern in 2019, AI &amp; Frontend Engineer in 2026: five companies, four and a half years of freelance
-          and a degree along the way. Select any block on the timeline to read what I did there.
+          Android developer in 2020, AI &amp; Frontend Engineer in 2026: two companies and a degree along
+          the way. Select any block on the timeline to read what I did there.
         </p>
       </header>
 
       {/* Desktop: an edit timeline. Pick a clip to inspect it. */}
       <div className={`${s.timeline} wrap`} data-reveal>
         <div className={s.ruler} aria-hidden>
-          <span className={s.rulerStart}>2019</span>
+          <span className={s.rulerStart}>2020</span>
           {YEARS.map((y) => (
             <span key={y} className={s.year} style={{ left: `${pct(y * 12)}%` }}>
               {y}

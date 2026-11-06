@@ -63,7 +63,7 @@ export default function Header() {
       <p className={s.role}>{profile.role}</p>
       <nav className={s.nav} aria-label="Quick links">
         <a href={profile.cv} target="_blank" rel="noopener" className={s.cv}>
-          Résumé <span aria-hidden>↗</span>
+          Resume <span aria-hidden>↗</span>
         </a>
         <a href="#contact" onClick={jump('#contact')}>
           Contact

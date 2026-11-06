@@ -17,7 +17,7 @@ export const hue = (h: Hue) =>
 export const profile = {
   name: 'Faresa Prasetyo Nugroho',
   first: 'Faresa',
-  role: 'AI & Frontend Engineer',
+  role: 'AI Engineer & AI Video Creator',
   city: 'Jakarta, Indonesia',
   email: 'faresaprasetyon@gmail.com',
   linkedin: 'https://www.linkedin.com/in/faresaprasetyo/',
@@ -30,11 +30,13 @@ export const profile = {
 export const about = {
   // Rendered with the highlighted phrases coloured to match the cards below.
   intro: [
-    { text: 'I’m a software engineer in Jakarta with more than three years of professional experience. I started in ' },
+    { text: 'I am a software engineer in Jakarta with one year of professional experience. I started in ' },
     { text: 'Android', hue: 'green' as Hue },
     { text: ', building Kotlin apps on clean architecture. Today I build ' },
     { text: 'AI agents and automation', hue: 'teal' as Hue },
-    { text: ', and ' },
+    { text: ', ' },
+    { text: 'AI videos for brands', hue: 'rose' as Hue },
+    { text: ' and ' },
     { text: 'websites that move with your scroll', hue: 'amber' as Hue },
     { text: '.' },
   ],
@@ -60,10 +62,17 @@ export const about = {
       body: 'Production apps in Kotlin and Java for attendance, point of sale, news, healthcare and AR shopping, on MVVM and Clean Architecture.',
       tools: ['Kotlin', 'MVVM', 'Coroutines', 'Retrofit'],
     },
+    {
+      hue: 'rose' as Hue,
+      no: 'D',
+      title: 'AI video creation',
+      body: 'Short vertical videos for ads, products, property and social: directed, prompted and generated with the newest video models, then cut ready to post.',
+      tools: ['Higgsfield', 'Seedance', 'Kling', 'Veo 3.1', 'Remotion'],
+    },
   ],
   facts: [
-    { value: '3+', label: 'years of professional software engineering', hue: 'blue' as Hue },
-    { value: '4', label: 'AI agents deployed at Kerja Web3', hue: 'teal' as Hue },
+    { value: '1', label: 'year of professional software engineering', hue: 'blue' as Hue },
+    { value: '5', label: 'AI agents deployed at Kerja Web3', hue: 'teal' as Hue },
     { value: '6', label: 'live websites in this portfolio', hue: 'amber' as Hue },
     { value: '1', label: 'research paper published in JINTEKS', hue: 'violet' as Hue },
   ],
@@ -200,7 +209,7 @@ export const agents = {
     cards: [
       { code: 'hermes/trade', title: 'Trading agent', hue: 'green' as Hue, body: 'Watches the market in real time and detects trading signals.' },
       { code: 'hermes/ads', title: 'Ads agent', hue: 'amber' as Hue, body: 'Runs and manages advertising campaigns automatically.' },
-      { code: 'hermes/tweet', title: 'Social agent', hue: 'blue' as Hue, body: 'Writes and schedules posts for social media.' },
+      { code: 'hermes/tweet', title: 'Social agent', hue: 'blue' as Hue, body: 'Writes and schedules posts for social media. Also handles auto reply posts and quote tweets for X (Twitter) using a cookies-based authentication system.' },
       { code: 'hermes/audit', title: 'Security audit agent', hue: 'rose' as Hue, body: 'Scans client web apps for vulnerabilities and writes the security report.' },
     ],
   },
@@ -216,6 +225,113 @@ export const agents = {
     ],
   },
 };
+
+export type Product = {
+  id: string;
+  hue: Hue;
+  title: string;
+  kind: string;
+  year: string;
+  summary: string;
+  points: string[];
+  stats: { value: string; label: string }[];
+  stack: string[];
+  slug: string; // screen recording in /public/previews
+  live: string;
+  repo: string;
+};
+
+/** Live products. Both dashboards sit behind a login, so the previews are recordings. */
+export const products: Product[] = [
+  {
+    id: 'vireo',
+    hue: 'amber',
+    title: 'Vireo',
+    kind: 'Autonomous AI video studio',
+    year: '2026',
+    summary:
+      'Takes a viral reference video and recreates its motion with a locked brand character, ending in a 9:16 video ready for Reels, TikTok and Shorts. No manual editing.',
+    points: [
+      'Pulls trending videos per niche through an MCP trend feed, then a vision model scores each one before any render credit is spent.',
+      'Writes the generation prompt by watching the reference, while the brand character stays locked.',
+      'Renders through Higgsfield engines (Seedance 2.5, Wan Prime) with routing per video.',
+      'Learns from every QC verdict in a per-niche RAG memory and says when the draft step can be skipped.',
+    ],
+    stats: [
+      { value: '13', label: 'character personas running' },
+      { value: '55', label: 'videos rendered' },
+    ],
+    stack: ['Next.js', 'Node.js', 'SQLite', 'Higgsfield', 'MCP', 'ffmpeg'],
+    slug: 'vireo',
+    live: 'https://vireo.kepin.ai',
+    repo: 'https://github.com/Faresapn/vireo',
+  },
+  {
+    id: 'threadscms',
+    hue: 'teal',
+    title: 'Threads CMS',
+    kind: 'Multi-account Threads automation',
+    year: '2026',
+    summary:
+      'A self-hosted CMS that writes, schedules and auto-posts Threads content for many accounts at once, each with its own AI persona.',
+    points: [
+      'AI writing with a persona per account that learns its voice from reference Threads posts.',
+      'A scheduler that runs 24/7 and auto-posts, with drag-and-drop images sent to object storage behind a CDN.',
+      'Official Threads OAuth with token refresh, plus analytics that compare every account.',
+    ],
+    stats: [
+      { value: '12.2M', label: 'views across the managed accounts' },
+      { value: '20+', label: 'accounts managed' },
+    ],
+    stack: ['Python', 'SQLite', 'Threads Graph API', 'S3 / R2 storage', 'LLM'],
+    slug: 'threadscms',
+    live: 'https://cms.kepin.ai',
+    repo: 'https://github.com/Faresapn/threads-cms-v2',
+  },
+];
+
+export const repos: { name: string; title: string; body: string; hue: Hue; url: string }[] = [
+  {
+    name: 'auto-engagement-x',
+    title: 'X auto reply bot',
+    body: 'Replies and quotes on X with Playwright and Claude, on the account’s own browser session. Zero X API cost, with a three-tier picker for viral posts.',
+    hue: 'blue',
+    url: 'https://github.com/Faresapn/auto-engagement-x',
+  },
+  {
+    name: 'x-auto-poster',
+    title: 'X auto poster',
+    body: 'Config-driven posting and quote tweets for any number of accounts and personas, scheduled by Hermes Agent cron.',
+    hue: 'violet',
+    url: 'https://github.com/Faresapn/x-auto-poster',
+  },
+  {
+    name: 'threads-content-management',
+    title: 'Threads dashboard v1',
+    body: 'The first version of the Threads tool: multi-account OAuth, a thread composer, a scheduler and a soft-sell reply flow.',
+    hue: 'green',
+    url: 'https://github.com/Faresapn/threads-content-management',
+  },
+];
+
+export type ReelClip = {
+  slug: string; // files in /public/reel: <slug>.mp4, <slug>-loop.mp4, <slug>.webp
+  title: string;
+  kind: string;
+  model: string;
+  length: string;
+  hue: Hue;
+};
+
+export const reel: ReelClip[] = [
+  { slug: 'veo-property', title: 'Own a home in Magetan', kind: 'Property ad', model: 'Google Flow · Veo 3.1 Fast', length: '0:38', hue: 'amber' },
+  { slug: 'seedance-chef', title: 'Toddler chef', kind: 'Character series', model: 'Seedance 2.5 · Higgsfield', length: '0:30', hue: 'rose' },
+  { slug: 'veo-coffee', title: 'Kopi Bubuk Campur', kind: 'Product ad', model: 'Google Flow · Veo 3.1 Fast', length: '0:18', hue: 'amber' },
+  { slug: 'wan-kungfu', title: 'Sunrise kung fu', kind: 'Motion transfer', model: 'Wan 3 Prime · Higgsfield', length: '0:15', hue: 'teal' },
+  { slug: 'omni-kidney', title: 'How your kidneys work', kind: '3D explainer', model: 'Google Flow · Omni', length: '1:07', hue: 'blue' },
+  { slug: 'kling-tortoise', title: 'The tortoise striker', kind: 'Viral short', model: 'Kling 4.0', length: '0:15', hue: 'green' },
+  { slug: 'remotion-forest', title: 'What if the forest burned?', kind: 'Coded animation', model: 'Claude · Remotion', length: '0:47', hue: 'violet' },
+];
 
 export type Clip = {
   id: string;
@@ -233,31 +349,13 @@ export type Clip = {
 
 export const clips: Clip[] = [
   {
-    id: 'ontrucks', track: 'work', label: 'On Trucks',
-    title: 'Android Developer (Intern)', org: 'On Trucks',
-    from: '2019-12', to: '2020-03', when: 'Dec 2019 — Mar 2020', where: 'Jakarta',
-    points: [
-      'Connected an inventory management app to its REST APIs with Retrofit, including error handling.',
-      'Debugging, testing and performance work inside a Scrum team.',
-    ],
-  },
-  {
-    id: 'komerce', track: 'work', label: 'Komerce',
-    title: 'Android Developer', org: 'Komerce',
-    from: '2020-06', to: '2020-10', when: 'Jun — Oct 2020', where: 'Purbalingga',
-    points: [
-      'Built an employee attendance app in native Android with real-time updates.',
-      'Shipped check-in and check-out, location-based validation and automatic data storage.',
-    ],
-  },
-  {
     id: 'agree', track: 'work', label: 'Agree · Telkom',
     title: 'Android Developer', org: 'Agree (Telkom Indonesia)',
     from: '2020-11', to: '2021-04', when: 'Nov 2020 — Apr 2021', where: 'Jakarta',
     points: [
       'Built a management app for fishermen and farmers to track operations and finances (Kotlin, MVVM).',
       'Delivered five features end to end, all merged to production within the sprint.',
-      'Worked RxJava and Kotlin Coroutines into Telkom’s existing codebase.',
+      'Worked RxJava and Kotlin Coroutines into Telkom\'s existing codebase.',
     ],
   },
   {
@@ -270,22 +368,13 @@ export const clips: Clip[] = [
     ],
   },
   {
-    id: 'freelance', track: 'work', label: 'Freelance — Android & web',
-    title: 'Android & Web Developer', org: 'Freelance',
-    from: '2021-10', to: '2026-05', when: 'Oct 2021 — May 2026', where: 'Yogyakarta',
-    points: [
-      'Android apps in production for news, attendance tracking, point of sale and AR shopping.',
-      'Company websites with custom animation for Resa Variasi, Ryga Adventure and Batik Tiara.',
-      'MVVM, Retrofit, Kotlin Coroutines and LiveData across every Android codebase.',
-    ],
-  },
-  {
     id: 'kerjaweb3', track: 'work', label: 'Kerja Web3',
     title: 'AI & Frontend Engineer', org: 'Kerja Web3',
     from: '2026-06', to: null, when: 'Jun 2026 — today', where: 'Tangerang, Banten · on-site',
     points: [
       'Engineered and deployed the Hermes AI agents for trading signals, ad campaigns and social posting.',
       'Built a security audit agent that scans client web apps and writes the assessment report.',
+      'Built auto reply post and quote tweet agent for X (Twitter) using a cookies-based authentication system.',
       'Develops client websites in Next.js with GSAP and Lenis for smooth, animated scrolling.',
       'Owns delivery from business requirement to deployment.',
     ],
@@ -294,7 +383,7 @@ export const clips: Clip[] = [
     id: 'uty', track: 'study', label: 'Informatics — UTY',
     title: 'Bachelor of Informatics', org: 'Universitas Teknologi Yogyakarta',
     from: '2021-09', to: '2025-08', when: '2021 — 2025', where: 'Yogyakarta · GPA 3.54 / 4.00',
-    points: ['Completed alongside freelance Android and web work.'],
+    points: ['Completed alongside Android development and side projects.'],
   },
   {
     id: 'ar', track: 'research', label: 'E-Commerce AR',
@@ -314,6 +403,7 @@ export const clips: Clip[] = [
     points: [
       'An n8n pipeline that turns text prompts into AI images, then promo videos, saved to Drive for affiliate campaigns.',
       'OpenClaw, a personal agent for crypto price alerts, trading signals and daily routines.',
+      'Vireo, an autonomous AI video studio on Higgsfield, and Threads CMS, which auto-posts for 20+ accounts.',
     ],
   },
 ];
@@ -327,6 +417,7 @@ export const tracks: { key: Clip['track']; code: string; name: string; hue: Hue 
 
 export const toolkit: { group: string; hue: Hue; items: string[] }[] = [
   { group: 'AI & ML', hue: 'teal', items: ['Python', 'Machine learning (scikit-learn)', 'Deep learning fundamentals', 'Prompt engineering', 'LLM integration'] },
+  { group: 'AI video', hue: 'rose', items: ['Higgsfield', 'Seedance 2.5', 'Wan 3 Prime', 'Kling 4.0', 'Google Flow · Veo 3.1', 'Remotion', 'Prompt direction'] },
   { group: 'AI agents', hue: 'blue', items: ['Hermes AI Agent', 'OpenClaw AI Agent', 'AI image generation', 'AI video generation'] },
   { group: 'Automation', hue: 'violet', items: ['n8n', 'API orchestration', 'Webhooks', 'Event-driven pipelines', 'Google Drive API', 'Docker'] },
   { group: 'Frontend & motion', hue: 'amber', items: ['Next.js', 'GSAP', 'Lenis', 'Three.js', 'Framer Motion', 'Tailwind CSS', 'Vite', 'HTML', 'CSS'] },
@@ -349,6 +440,7 @@ export const chapters: { id: string; label: string; hue: Hue }[] = [
   { id: 'about', label: 'About', hue: 'green' },
   { id: 'work', label: 'Work', hue: 'amber' },
   { id: 'systems', label: 'AI Systems', hue: 'teal' },
+  { id: 'reel', label: 'AI Video', hue: 'rose' },
   { id: 'path', label: 'Experience', hue: 'violet' },
   { id: 'toolkit', label: 'Skills', hue: 'blue' },
   { id: 'contact', label: 'Contact', hue: 'signal' },

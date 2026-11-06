@@ -25,13 +25,13 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Faresa Prasetyo Nugroho — AI & Frontend Engineer',
+  title: 'Faresa Prasetyo Nugroho — AI Engineer & AI Video Creator',
   description:
-    'Portfolio of Faresa Prasetyo Nugroho, AI & Frontend Engineer in Jakarta. Autonomous agents, n8n automation, and scroll-driven websites built with Next.js, GSAP and Lenis.',
+    'Portfolio of Faresa Prasetyo Nugroho, AI engineer and AI video creator in Jakarta. Autonomous agents, AI video made with Higgsfield, Seedance, Kling and Veo, and scroll-driven websites built with Next.js, GSAP and Lenis.',
   authors: [{ name: 'Faresa Prasetyo Nugroho' }],
   openGraph: {
-    title: 'Faresa Prasetyo Nugroho — AI & Frontend Engineer',
-    description: 'Agents that act on their own, and websites that move when you do.',
+    title: 'Faresa Prasetyo Nugroho — AI Engineer & AI Video Creator',
+    description: 'Agents that act on their own, AI videos that sell, and websites that move when you do.',
     type: 'website',
   },
   twitter: { card: 'summary_large_image' },

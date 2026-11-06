@@ -4,6 +4,7 @@ import Hero from '@/components/Hero';
 import About from '@/components/About';
 import Work from '@/components/Work';
 import Systems from '@/components/Systems';
+import Reel from '@/components/Reel';
 import Path from '@/components/Path';
 import Toolkit from '@/components/Toolkit';
 import Credits from '@/components/Credits';
@@ -23,6 +24,7 @@ export default function Page() {
         <About />
         <Work />
         <Systems />
+        <Reel />
         <Path />
         <Toolkit />
         <Credits />

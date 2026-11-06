@@ -186,10 +186,10 @@ export default function Hero() {
       <div className={s.foot}>
         <p className={s.who} data-intro>
           <span className={s.full}>{profile.name}</span>
-          <span className="label">Software engineer · 3+ years</span>
+          <span className="label">Software engineer · 1 year</span>
         </p>
         <p className={s.statement} data-intro>
-          I build AI agents that work on their own, and websites that <span>come alive</span> as you scroll.
+          I build AI agents that work on their own, AI videos that sell, and websites that <span>come alive</span> as you scroll.
         </p>
         <div className={s.meta} data-intro>
           <span className="label">Currently</span>

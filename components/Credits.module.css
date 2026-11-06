@@ -25,9 +25,8 @@
 
 .mailRow {
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 18px 32px;
+  flex-direction: column;
+  gap: 24px;
   margin-top: clamp(56px, 9vh, 104px);
   padding-top: 28px;
   border-top: 1px solid var(--line-2);
@@ -59,29 +58,70 @@
   transform-origin: left;
 }
 
-.copy {
-  min-height: 46px;
-  padding: 0 18px;
+.sendBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  align-self: flex-start;
+  min-height: 52px;
+  padding: 0 32px;
   font-family: var(--f-sans);
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 600;
   letter-spacing: 0.005em;
   background: var(--ink);
   color: var(--signal);
   transition:
-    background 0.2s var(--ease),
-    color 0.2s var(--ease);
+    background 0.3s var(--ease),
+    color 0.3s var(--ease),
+    transform 0.3s var(--ease);
 }
-.copy:hover {
+.sendBtn:hover {
   background: var(--bone);
   color: var(--ink);
+  transform: translateY(-2px);
 }
 
 .links {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.linkCard {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px 36px;
-  margin-top: 36px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 20px;
+  border: 1px solid var(--line-2);
+  font-family: var(--f-sans);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+  transition:
+    background 0.3s var(--ease),
+    border-color 0.3s var(--ease),
+    transform 0.3s var(--ease);
+}
+.linkCard:hover {
+  background: rgba(11, 10, 8, 0.08);
+  border-color: var(--ink);
+  transform: translateY(-2px);
+}
+
+.linkName {
+  white-space: nowrap;
+}
+
+.linkArrow {
+  font-size: 16px;
+  transition: transform 0.3s var(--ease);
+}
+.linkCard:hover .linkArrow {
+  transform: translate(3px, -3px);
 }
 
 /* Colophon: role on the left, name on the right, dotted leader between. */
@@ -166,6 +206,13 @@
 }
 
 @media (max-width: 760px) {
+  .sendBtn {
+    align-self: stretch;
+    min-height: 48px;
+  }
+  .links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .end {
     grid-template-columns: 1fr;
     justify-items: start;

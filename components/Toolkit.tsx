@@ -12,7 +12,7 @@ export default function Toolkit() {
     >
       <header className="sec-head">
         <p className="sec-index label">
-          <span>05 — Skills</span>
+          <span>06 — Skills</span>
           <span>What I work with</span>
         </p>
         <h2 id="toolkit-title" className="sec-title" data-split>

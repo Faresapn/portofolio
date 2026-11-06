@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { agents, hue, pipeline } from '@/lib/content';
+import { agents, hue, pipeline, products, repos } from '@/lib/content';
+import { prefersReducedMotion } from '@/lib/scroll';
 import s from './Systems.module.css';
 
 const pad = (n: number) => String(n).padStart(2, '0');
@@ -36,6 +37,23 @@ export default function Systems() {
     return () => st.kill();
   }, []);
 
+  // Product recordings play only while on screen.
+  const productVideos = useRef<(HTMLVideoElement | null)[]>([]);
+  useEffect(() => {
+    if (prefersReducedMotion()) return;
+    const io = new IntersectionObserver(
+      (items) =>
+        items.forEach((item) => {
+          const v = item.target as HTMLVideoElement;
+          if (item.isIntersecting) v.play().catch(() => {});
+          else v.pause();
+        }),
+      { threshold: 0.4 },
+    );
+    productVideos.current.forEach((v) => v && io.observe(v));
+    return () => io.disconnect();
+  }, []);
+
   const now = pipeline.nodes[step];
 
   return (
@@ -57,7 +75,7 @@ export default function Systems() {
         </h2>
         <p className="sec-note" data-reveal>
           The other half of my work has no screen: AI agents that trade, run ads, post and audit on their own, and
-          pipelines that produce content without anyone clicking. Scroll on to watch one run.
+          pipelines that make videos and posts without anyone clicking. Scroll on to watch one run.
         </p>
       </header>
 
@@ -125,6 +143,97 @@ export default function Systems() {
               </p>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className={`${s.products} wrap`}>
+        <div className={s.blockHead} data-reveal>
+          <p className="label">Shipped products · 2026</p>
+          <h3 className={s.blockTitle}>Live AI products</h3>
+          <p className={s.blockIntro}>
+            Two systems I built end to end and run every day. Both dashboards sit behind a login, so these are screen
+            recordings of the real thing, with account names blurred.
+          </p>
+        </div>
+
+        <ol className={s.productList}>
+          {products.map((p, i) => (
+            <li key={p.id} className={s.product} style={hue(p.hue)} data-reveal>
+              <a className={s.productMedia} href={p.live} target="_blank" rel="noopener" aria-label={`Open ${p.title}`}>
+                <video
+                  ref={(el) => {
+                    productVideos.current[i] = el;
+                  }}
+                  src={`/previews/${p.slug}.mp4`}
+                  poster={`/previews/${p.slug}.webp`}
+                  muted
+                  loop
+                  playsInline
+                  preload="none"
+                />
+                <span className={`label ${s.productHost}`}>
+                  <i aria-hidden /> {p.live.replace(/^https?:\/\//, '')}
+                </span>
+              </a>
+              <div className={s.productBody}>
+                <p className={s.productMeta}>
+                  <span className={s.productKind}>{p.kind}</span>
+                  <span className="label">{p.year}</span>
+                </p>
+                <h4 className={s.productTitle}>{p.title}</h4>
+                <p className={s.productSummary}>{p.summary}</p>
+                <ul className={s.productPoints}>
+                  {p.points.map((pt) => (
+                    <li key={pt}>{pt}</li>
+                  ))}
+                </ul>
+                <dl className={s.productStats}>
+                  {p.stats.map((st) => (
+                    <div key={st.label}>
+                      <dt className="sr-only">{st.label}</dt>
+                      <dd>
+                        <span className={s.statValue}>{st.value}</span>
+                        <span className={s.statLabel}>{st.label}</span>
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+                <ul className={s.productStack} aria-label="Stack">
+                  {p.stack.map((t) => (
+                    <li key={t}>{t}</li>
+                  ))}
+                </ul>
+                <p className={s.productLinks}>
+                  <a className="link-arrow" href={p.live} target="_blank" rel="noopener">
+                    Live app <span aria-hidden>↗</span>
+                  </a>
+                  <a className="link-arrow" href={p.repo} target="_blank" rel="noopener">
+                    Source on GitHub <span aria-hidden>↗</span>
+                  </a>
+                </p>
+              </div>
+            </li>
+          ))}
+        </ol>
+
+        <div className={s.repos}>
+          <p className="label">More automation on GitHub</p>
+          <ul className={s.repoGrid}>
+            {repos.map((r) => (
+              <li key={r.name} style={hue(r.hue)} data-reveal>
+                <a className={s.repo} href={r.url} target="_blank" rel="noopener">
+                  <span className={s.agentCode}>
+                    <i aria-hidden /> {r.name}
+                  </span>
+                  <span className={s.repoTitle}>{r.title}</span>
+                  <span className={s.repoBody}>{r.body}</span>
+                  <span className={`label ${s.repoLink}`}>
+                    View repo <span aria-hidden>↗</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
