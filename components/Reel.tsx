@@ -9,29 +9,11 @@ import s from './Reel.module.css';
 const pad = (n: number) => String(n).padStart(2, '0');
 
 export default function Reel() {
-  const loops = useRef<(HTMLVideoElement | null)[]>([]);
   const [open, setOpen] = useState<number | null>(null);
   const trigger = useRef<HTMLElement | null>(null);
 
-  // Muted loops play only while their card is on screen.
-  useEffect(() => {
-    if (prefersReducedMotion()) return;
-    const io = new IntersectionObserver(
-      (items) =>
-        items.forEach((item) => {
-          const v = item.target as HTMLVideoElement;
-          if (item.isIntersecting) v.play().catch(() => {});
-          else v.pause();
-        }),
-      { threshold: 0.5 },
-    );
-    loops.current.forEach((v) => v && io.observe(v));
-    return () => io.disconnect();
-  }, []);
-
   const show = (i: number, from: HTMLElement) => {
     trigger.current = from;
-    loops.current.forEach((v) => v?.pause());
     setOpen(i);
   };
 
@@ -73,16 +55,12 @@ export default function Reel() {
               aria-label={`Watch ${c.title}, ${c.kind}, made with ${c.model}`}
             >
               <span className={s.frame}>
-                <video
-                  ref={(el) => {
-                    loops.current[i] = el;
-                  }}
-                  src={`/reel/${c.slug}-loop.mp4`}
-                  poster={`/reel/${c.slug}.webp`}
-                  muted
-                  loop
-                  playsInline
-                  preload="none"
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`/reel/${c.slug}.webp`}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
                 />
                 <span className={`label ${s.top}`}>
                   <span>{pad(i + 1)}</span>
