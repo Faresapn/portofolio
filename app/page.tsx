@@ -1,15 +1,15 @@
 import SmoothScroll from '@/components/SmoothScroll';
-import Header from '@/components/Header';
-import Hero from '@/components/Hero';
-import About from '@/components/About';
-import Work from '@/components/Work';
-import Systems from '@/components/Systems';
-import Reel from '@/components/Reel';
-import Path from '@/components/Path';
-import Toolkit from '@/components/Toolkit';
-import Credits from '@/components/Credits';
-import Scrubber from '@/components/Scrubber';
-import Reveals from '@/components/Reveals';
+import Nav from '@/components/Nav';
+import Intro from '@/components/Intro';
+import Receipts from '@/components/Receipts';
+import Scenes from '@/components/Scenes';
+import Capabilities from '@/components/Capabilities';
+import Projects from '@/components/Projects';
+import AiSystems from '@/components/AiSystems';
+import VideoReel from '@/components/VideoReel';
+import Experience from '@/components/Experience';
+import Skills from '@/components/Skills';
+import Contact from '@/components/Contact';
 
 export default function Page() {
   return (
@@ -18,20 +18,19 @@ export default function Page() {
       <a className="skip" href="#work">
         Skip to work
       </a>
-      <Header />
+      <Nav />
       <main>
-        <Hero />
-        <About />
-        <Work />
-        <Systems />
-        <Reel />
-        <Path />
-        <Toolkit />
-        <Credits />
+        <Intro />
+        <Receipts />
+        <Scenes />
+        <Capabilities />
+        <Projects />
+        <AiSystems />
+        <VideoReel />
+        <Experience />
+        <Skills />
+        <Contact />
       </main>
-      <Scrubber />
-      <div className="grain" aria-hidden />
-      <Reveals />
     </>
   );
 }

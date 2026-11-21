@@ -1,0 +1,135 @@
+.section {
+  padding-block: clamp(40px, 6vh, 72px) 0;
+}
+
+.title {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: clamp(34px, 4vw, 56px);
+  line-height: 1;
+  letter-spacing: -0.045em;
+  text-align: center;
+}
+.sub {
+  margin-top: 14px;
+  text-align: center;
+  color: var(--fg-2);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 48px;
+}
+
+/* Staggered like cards pulled halfway out of a deck. */
+.cards li:nth-child(even) .card {
+  margin-top: 28px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  min-height: 250px;
+  padding: 18px 16px 16px;
+  border-radius: 16px;
+  background: var(--bg-2);
+  box-shadow:
+    inset 0 0 0 1px var(--line),
+    var(--shadow);
+  transition:
+    transform 0.3s var(--ease),
+    background-color 0.25s var(--ease),
+    color 0.25s var(--ease);
+}
+.card:hover {
+  transform: translateY(-8px);
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+.card:hover .hint {
+  color: inherit;
+}
+
+.last {
+  background: var(--fg);
+  color: var(--bg);
+}
+.last .hint {
+  color: inherit;
+  opacity: 0.75;
+}
+
+.no {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: clamp(40px, 3.6vw, 56px);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+}
+.name {
+  margin-top: auto;
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+.hint {
+  margin-top: 6px;
+  font-size: 14.5px;
+  line-height: 1.35;
+  color: var(--fg-3);
+}
+
+@media (max-width: 1100px) {
+  .cards {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .cards li:nth-child(even) .card {
+    margin-top: 0;
+  }
+  .card {
+    min-height: 180px;
+  }
+}
+@media (max-width: 600px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .card {
+    min-height: 150px;
+  }
+}
+
+/* ─── Tool marquee ───────────────────────────────────────────────────────── */
+
+.marquee {
+  margin-top: clamp(56px, 8vh, 88px);
+  border-block: 1px solid var(--line);
+  overflow: hidden;
+  background: var(--bg-2);
+}
+.track {
+  display: flex;
+  width: max-content;
+  animation: slide 48s linear infinite;
+}
+.marquee:hover .track {
+  animation-play-state: paused;
+}
+.track ul {
+  display: flex;
+}
+.track li {
+  padding: 18px 30px;
+  border-right: 1px solid var(--line);
+  font-weight: 600;
+  font-size: 18px;
+  white-space: nowrap;
+}
+@keyframes slide {
+  to {
+    transform: translateX(-50%);
+  }
+}

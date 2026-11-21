@@ -1,0 +1,25 @@
+.table {
+  margin-top: clamp(40px, 6vh, 64px);
+  border-top: 2px solid var(--fg);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.3fr) minmax(0, 1fr);
+  gap: 12px 32px;
+  align-items: baseline;
+  padding-block: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.group {
+  font-weight: 700;
+  font-size: 19px;
+  letter-spacing: -0.015em;
+}
+
+@media (max-width: 720px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -2,20 +2,16 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { hue, profile, reel } from '@/lib/content';
-import { lockScroll, prefersReducedMotion } from '@/lib/scroll';
-import s from './Reel.module.css';
+import { profile, reel } from '@/lib/content';
+import { lockScroll } from '@/lib/scroll';
+import SceneHead from './SceneHead';
+import s from './VideoReel.module.css';
 
 const pad = (n: number) => String(n).padStart(2, '0');
 
-export default function Reel() {
+export default function VideoReel() {
   const [open, setOpen] = useState<number | null>(null);
   const trigger = useRef<HTMLElement | null>(null);
-
-  const show = (i: number, from: HTMLElement) => {
-    trigger.current = from;
-    setOpen(i);
-  };
 
   const close = useCallback(() => {
     setOpen(null);
@@ -23,68 +19,47 @@ export default function Reel() {
   }, []);
 
   return (
-    <section
-      id="reel"
-      className={`${s.reel} ground-ink`}
-      data-chapter="AI Video"
-      data-tone="dark"
-      aria-labelledby="reel-title"
-      style={{ ['--em' as string]: 'var(--rose)' }}
-    >
-      <header className="sec-head">
-        <p className="sec-index label">
-          <span>04 — AI Video</span>
-          <span>Selected cuts · 2026</span>
-        </p>
-        <h2 id="reel-title" className="sec-title" data-split>
-          AI <em>video</em> reel
-        </h2>
-        <p className="sec-note" data-reveal>
-          Short vertical videos I direct and generate with the newest video models: ads, property promos, explainers
-          and character series. Tap any clip to watch it with sound.
-        </p>
-      </header>
+    <section id="reel" className="section" aria-labelledby="reel-title">
+      <SceneHead id="reel" title="AI videos for ads, products and stories.">
+        Short vertical videos I direct and generate with current AI video models: ads, property promos, explainers and
+        character series. Tap a clip to watch it with sound.
+      </SceneHead>
 
-      <ol className={`${s.grid} wrap`}>
+      <ol className={`wrap ${s.grid}`}>
         {reel.map((c, i) => (
-          <li key={c.slug} className={s.item} style={hue(c.hue)} data-reveal>
+          <li key={c.slug}>
             <button
               type="button"
               className={s.card}
-              onClick={(e) => show(i, e.currentTarget)}
+              onClick={(e) => {
+                trigger.current = e.currentTarget;
+                setOpen(i);
+              }}
               aria-label={`Watch ${c.title}, ${c.kind}, made with ${c.model}`}
             >
               <span className={s.frame}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={`/reel/${c.slug}.webp`}
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                />
-                <span className={`label ${s.top}`}>
-                  <span>{pad(i + 1)}</span>
-                  <span>{c.length}</span>
-                </span>
+                <img src={`/reel/${c.slug}.webp`} alt="" loading="lazy" decoding="async" />
+                <span className={s.length}>{c.length}</span>
                 <span className={s.play} aria-hidden>
                   ▶
                 </span>
               </span>
-              <span className={s.kind}>{c.kind}</span>
               <span className={s.title}>{c.title}</span>
-              <span className={`label ${s.model}`}>{c.model}</span>
+              <span className={s.meta}>
+                {c.kind} · {c.model}
+              </span>
             </button>
           </li>
         ))}
-        <li className={s.hire} data-reveal>
-          <p className="label">Freelance</p>
+        <li className={s.hire}>
           <p className={s.hireTitle}>Need videos like these?</p>
           <p className={s.hireBody}>
             Product ads, property promos, explainers or a recurring AI character for your brand. Vertical, on brief and
             ready to post.
           </p>
-          <a className={s.hireBtn} href={`mailto:${profile.email}?subject=AI%20video%20project`}>
-            Start a video project <span aria-hidden>→</span>
+          <a className="btn btn-primary" href={`mailto:${profile.email}?subject=AI%20video%20project`}>
+            Start a video project
           </a>
         </li>
       </ol>
@@ -145,7 +120,6 @@ function Player({ index, onChange, onClose }: { index: number; onChange: (i: num
       aria-modal="true"
       aria-labelledby="reel-player-title"
       data-lenis-prevent
-      style={hue(clip.hue)}
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <div className={s.stage}>
@@ -160,20 +134,20 @@ function Player({ index, onChange, onClose }: { index: number; onChange: (i: num
         />
       </div>
       <aside className={s.info}>
-        <p className="label">
-          {pad(index + 1)} / {pad(reel.length)} · {clip.length}
+        <p className={s.count}>
+          {pad(index + 1)} of {pad(reel.length)} · {clip.length}
         </p>
         <h3 id="reel-player-title" className={s.infoTitle}>
           {clip.title}
         </h3>
         <p className={s.infoKind}>{clip.kind}</p>
         <p className={s.infoModel}>
-          <span className="label">Made with</span>
+          <span>Made with</span>
           {clip.model}
         </p>
         <div className={s.nav}>
           <button type="button" onClick={() => go(-1)} aria-label="Previous video">
-            ← Prev
+            ← Previous
           </button>
           <button type="button" onClick={() => go(1)} aria-label="Next video">
             Next →

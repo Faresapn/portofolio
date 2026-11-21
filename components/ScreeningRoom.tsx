@@ -146,7 +146,7 @@ export default function ScreeningRoom({ project, number, build, origin, onClose 
     >
       <div className={s.bar}>
         <div className={s.id}>
-          <span className="label">Live preview — {number}</span>
+          <span className="label">Live preview · {number}</span>
           <h2 id="screening-title" className={s.title}>
             {project.title}
             {project.builds.length > 1 && <span className={s.buildName}> {build.label}</span>}
@@ -206,7 +206,7 @@ export default function ScreeningRoom({ project, number, build, origin, onClose 
             <iframe
               key={`${build.url}-${device}-${reloadKey}`}
               src={build.url}
-              title={`${project.title} — live site`}
+              title={`${project.title}, live site`}
               style={{ width: dev.w, height: dev.h, transform: `scale(${scale})` }}
               onLoad={() => setLoaded(true)}
               allow="autoplay; fullscreen"
@@ -238,7 +238,7 @@ export default function ScreeningRoom({ project, number, build, origin, onClose 
       </div>
 
       {build.embeddable && (
-        <p className={`label ${s.hint}`}>This is the live site — scroll and click inside the frame to use it</p>
+        <p className={`label ${s.hint}`}>This is the live site. Scroll and click inside the frame to use it.</p>
       )}
     </div>,
     document.body,
