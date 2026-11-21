@@ -52,15 +52,15 @@ export const about = {
       hue: 'amber' as Hue,
       no: 'B',
       title: 'Frontend & motion',
-      body: 'Websites where scrolling drives the story: film that plays frame by frame, 3D products you can turn, smooth motion throughout. Built in Next.js with GSAP and Lenis.',
-      tools: ['Next.js', 'GSAP', 'Lenis', 'Three.js'],
+      body: 'Websites where scrolling drives the story: film that plays frame by frame, 3D products you can turn, smooth motion throughout. Built in React and Next.js with GSAP and Lenis.',
+      tools: ['React', 'Next.js', 'GSAP', 'Lenis', 'Three.js'],
     },
     {
       hue: 'green' as Hue,
       no: 'C',
-      title: 'Android engineering',
-      body: 'Production apps in Kotlin and Java for attendance, point of sale, news, healthcare and AR shopping, on MVVM and Clean Architecture.',
-      tools: ['Kotlin', 'MVVM', 'Coroutines', 'Retrofit'],
+      title: 'Mobile development',
+      body: 'Production Android apps in Kotlin and Java for attendance, point of sale, news, healthcare and AR shopping, on MVVM and Clean Architecture. Cross-platform apps with React Native and Flutter.',
+      tools: ['Kotlin', 'React Native', 'Flutter', 'MVVM', 'Coroutines', 'Retrofit'],
     },
     {
       hue: 'rose' as Hue,
@@ -155,22 +155,6 @@ export const projects: Project[] = [
     builds: [{ label: 'Live', slug: 'sapi', url: 'https://jagaterameledak.vercel.app', embeddable: true }],
   },
   {
-    id: 'laufee',
-    hue: 'violet',
-    title: 'Laufee',
-    kind: 'Shampoo product launch page',
-    year: '2026',
-    summary:
-      'Landing page for an anti-dandruff shampoo. The bottle and its ingredients animate as you scroll, ending in a swipeable deck of product variants.',
-    detail: 'Built in two versions — GSAP with Lenis, and Lenis alone. Switch between them below to compare.',
-    role: 'Front-end & motion development',
-    stack: ['Next.js', 'Lenis', 'GSAP', 'Framer Motion'],
-    builds: [
-      { label: 'GSAP + Lenis', slug: 'laufee', url: 'https://newshampoo.vercel.app', embeddable: true },
-      { label: 'Lenis only', slug: 'laufee-lenis', url: 'https://lenisshampoo.vercel.app', embeddable: true },
-    ],
-  },
-  {
     id: 'felaufee',
     hue: 'green',
     title: 'Felaufee 3D',
@@ -182,6 +166,20 @@ export const projects: Project[] = [
     role: '3D & front-end development',
     stack: ['Three.js', 'GSAP ScrollTrigger', 'Vite'],
     builds: [{ label: 'Live', slug: 'felaufee', url: 'https://3dsampo.vercel.app', embeddable: true }],
+  },
+  {
+    id: 'promptedsite',
+    hue: 'violet',
+    title: 'PromptedSite',
+    kind: 'Prompt marketplace for websites',
+    year: '2026',
+    summary:
+      'A subscription library of 300+ motion-rich websites. Members copy one prompt into Claude Code, Cursor or Codex and get the full site and its source code. Monthly, yearly and lifetime plans.',
+    detail:
+      'I built the payment flow and checkout, the user profiling and analytics, and ran the Meta Ads campaigns that bring in new members.',
+    role: 'Payment gateway, user profiling & Meta Ads promotion',
+    stack: ['Next.js', 'Supabase', 'Polar.sh payments', 'PostHog', 'Meta Pixel & Meta Ads', 'Cloudflare', 'Sentry'],
+    builds: [{ label: 'Live', slug: 'promptedsite', url: 'https://promptedsite.com', embeddable: false }],
   },
 ];
 
@@ -237,8 +235,10 @@ export type Product = {
   stats: { value: string; label: string }[];
   stack: string[];
   slug: string; // screen recording in /public/previews
-  live: string;
-  repo: string;
+  live?: string;
+  repo?: string; // omitted for private repositories
+  privateRepo?: boolean;
+  walkthrough?: { src: string; length: string; language: string }; // full video with voice-over
 };
 
 /** Live products. Both dashboards sit behind a login, so the previews are recordings. */
@@ -265,6 +265,27 @@ export const products: Product[] = [
     slug: 'vireo',
     live: 'https://vireo.kepin.ai',
     repo: 'https://github.com/Faresapn/vireo',
+  },
+  {
+    id: 'flowauto',
+    hue: 'blue',
+    title: 'Flow Automation',
+    kind: 'Short-video pipeline on Google Flow',
+    year: '2026',
+    summary:
+      'Turns one idea into a finished 9:16 three-part story video. A dashboard plans the storyboard and voice-over, a Chrome extension renders every shot in Google Flow (Veo), and the backend stitches the final cut.',
+    points: [
+      'Idea → AI storyboard → review → prompts and ElevenLabs voice-over, all from one dashboard.',
+      'A Chrome extension pulls render jobs from the dashboard and drives Google Flow in batches.',
+      'Finalize step retimes the clips, adds voice and subtitles with ffmpeg, then backs up to Google Drive.',
+      'API keys and OAuth tokens are stored encrypted; ships as one Docker Compose stack.',
+    ],
+    stats: [],
+    stack: ['Python', 'FastAPI', 'React', 'TypeScript', 'Chrome extension', 'Google Flow · Veo', 'ElevenLabs', 'ffmpeg', 'Docker'],
+    slug: 'flowauto',
+    live: 'https://flow.resavariasi.biz.id',
+    privateRepo: true,
+    walkthrough: { src: '/previews/flow-walkthrough.mp4', length: '3:56', language: 'Indonesian voice-over' },
   },
   {
     id: 'threadscms',
@@ -351,7 +372,7 @@ export const clips: Clip[] = [
   {
     id: 'agree', track: 'work', label: 'Agree · Telkom',
     title: 'Android Developer', org: 'Agree (Telkom Indonesia)',
-    from: '2020-11', to: '2021-04', when: 'Nov 2020 — Apr 2021', where: 'Jakarta',
+    from: '2020-11', to: '2021-04', when: 'Nov 2020 – Apr 2021', where: 'Jakarta',
     points: [
       'Built a management app for fishermen and farmers to track operations and finances (Kotlin, MVVM).',
       'Delivered five features end to end, all merged to production within the sprint.',
@@ -361,7 +382,7 @@ export const clips: Clip[] = [
   {
     id: 'klikdokter', track: 'work', label: 'Klik Dokter',
     title: 'Android Developer', org: 'Klik Dokter',
-    from: '2021-05', to: '2021-10', when: 'May — Oct 2021', where: 'Jakarta',
+    from: '2021-05', to: '2021-10', when: 'May – Oct 2021', where: 'Jakarta',
     points: [
       'Migrated six to seven modules of the health app from Java to Kotlin within sprint deadlines.',
       'Integrated REST APIs with Retrofit across the full development cycle in Scrum.',
@@ -370,7 +391,7 @@ export const clips: Clip[] = [
   {
     id: 'kerjaweb3', track: 'work', label: 'Kerja Web3',
     title: 'AI & Frontend Engineer', org: 'Kerja Web3',
-    from: '2026-06', to: null, when: 'Jun 2026 — today', where: 'Tangerang, Banten · on-site',
+    from: '2026-06', to: null, when: 'Jun 2026 – today', where: 'Tangerang, Banten · on-site',
     points: [
       'Engineered and deployed the Hermes AI agents for trading signals, ad campaigns and social posting.',
       'Built a security audit agent that scans client web apps and writes the assessment report.',
@@ -380,15 +401,15 @@ export const clips: Clip[] = [
     ],
   },
   {
-    id: 'uty', track: 'study', label: 'Informatics — UTY',
+    id: 'uty', track: 'study', label: 'Informatics, UTY',
     title: 'Bachelor of Informatics', org: 'Universitas Teknologi Yogyakarta',
-    from: '2021-09', to: '2025-08', when: '2021 — 2025', where: 'Yogyakarta · GPA 3.54 / 4.00',
+    from: '2021-09', to: '2025-08', when: '2021 – 2025', where: 'Yogyakarta · GPA 3.54 / 4.00',
     points: ['Completed alongside Android development and side projects.'],
   },
   {
     id: 'ar', track: 'research', label: 'E-Commerce AR',
-    title: 'Lead Researcher & Developer', org: 'E-Commerce AR — published in JINTEKS',
-    from: '2023-01', to: '2024-12', when: '2023 — 2024', where: 'Research project',
+    title: 'Lead Researcher & Developer', org: 'E-Commerce AR, published in JINTEKS',
+    from: '2023-01', to: '2024-12', when: '2023 – 2024', where: 'Research project',
     points: [
       'A mobile shop where buyers place 3D products in their own room with augmented reality before checkout.',
       'Built with a waterfall process and evaluated with black-box and white-box testing.',
@@ -420,8 +441,8 @@ export const toolkit: { group: string; hue: Hue; items: string[] }[] = [
   { group: 'AI video', hue: 'rose', items: ['Higgsfield', 'Seedance 2.5', 'Wan 3 Prime', 'Kling 4.0', 'Google Flow · Veo 3.1', 'Remotion', 'Prompt direction'] },
   { group: 'AI agents', hue: 'blue', items: ['Hermes AI Agent', 'OpenClaw AI Agent', 'AI image generation', 'AI video generation'] },
   { group: 'Automation', hue: 'violet', items: ['n8n', 'API orchestration', 'Webhooks', 'Event-driven pipelines', 'Google Drive API', 'Docker'] },
-  { group: 'Frontend & motion', hue: 'amber', items: ['Next.js', 'GSAP', 'Lenis', 'Three.js', 'Framer Motion', 'Tailwind CSS', 'Vite', 'HTML', 'CSS'] },
-  { group: 'Android', hue: 'green', items: ['Android SDK', 'Jetpack', 'MVVM', 'ViewModel', 'LiveData', 'Kotlin Coroutines', 'RxJava', 'Retrofit', 'Dagger / Koin'] },
+  { group: 'Frontend & motion', hue: 'amber', items: ['React', 'Next.js', 'GSAP', 'Lenis', 'Three.js', 'Framer Motion', 'Tailwind CSS', 'Vite', 'HTML', 'CSS'] },
+  { group: 'Mobile', hue: 'green', items: ['React Native', 'Flutter', 'Android SDK', 'Jetpack', 'MVVM', 'ViewModel', 'LiveData', 'Kotlin Coroutines', 'RxJava', 'Retrofit', 'Dagger / Koin'] },
   { group: 'Languages', hue: 'rose', items: ['Kotlin', 'Java', 'Python', 'TypeScript', 'C#', 'HTML', 'CSS'] },
   { group: 'Tools', hue: 'teal', items: ['Git', 'GitHub', 'Figma', 'Postman', 'Android Studio', 'Docker'] },
   { group: 'Ways of working', hue: 'amber', items: ['Agile', 'Scrum', 'SDLC', 'Sprint planning', 'Code review'] },

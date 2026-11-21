@@ -1,0 +1,273 @@
+.private {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 4px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--fg-3);
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.stats dd {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 150px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: var(--accent-soft);
+}
+.statValue {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.statLabel {
+  font-size: 15px;
+  line-height: 1.35;
+  color: var(--fg-2);
+}
+
+.blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: clamp(48px, 8vh, 88px);
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: clamp(24px, 3.5vw, 44px);
+  border-radius: var(--radius);
+  background: var(--bg-2);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.blockHead {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.blockTitle {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: clamp(28px, 2.8vw, 40px);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+.blockIntro {
+  max-width: 64ch;
+  color: var(--fg-2);
+}
+
+.agents {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.agent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px;
+  border-radius: 16px;
+  background: var(--bg-3);
+}
+.agentTitle {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.agentBody {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--fg-2);
+}
+.code {
+  align-self: flex-start;
+  font-family: var(--f-mono);
+  font-size: 13.5px;
+  color: var(--fg-3);
+}
+
+/* Pipeline: centred steps joined by a dashed line that flows towards the next
+   step, ending in an arrowhead. Sideways on wide screens, a waterfall below. */
+.steps {
+  --flow: var(--accent);
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+.step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  text-align: center;
+}
+.stepNo {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--fg);
+  color: var(--bg);
+  font-weight: 800;
+  font-size: 17px;
+  box-shadow: 0 0 0 6px var(--accent-soft);
+}
+.stepName {
+  margin-top: 10px;
+  font-weight: 700;
+  font-size: 18px;
+}
+.stepLog {
+  max-width: 22ch;
+  font-size: 15.5px;
+  line-height: 1.4;
+  color: var(--fg-2);
+}
+
+/* Connector line */
+.step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 21px;
+  left: calc(50% + 32px);
+  width: calc(100% - 64px - 10px);
+  height: 2px;
+  background: repeating-linear-gradient(90deg, var(--flow) 0 8px, transparent 8px 14px);
+  background-size: 14px 2px;
+  opacity: 0.7;
+  animation: flow-x 0.9s linear infinite;
+}
+/* Arrowhead */
+.step:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  top: 16px;
+  left: calc(150% - 32px - 10px);
+  border-left: 9px solid var(--flow);
+  border-block: 6px solid transparent;
+}
+@keyframes flow-x {
+  to {
+    background-position: 14px 0;
+  }
+}
+@keyframes flow-y {
+  to {
+    background-position: 0 14px;
+  }
+}
+
+.duo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.points {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.points li {
+  position: relative;
+  padding-left: 22px;
+  color: var(--fg-2);
+}
+.points li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 0.72em;
+  width: 8px;
+  height: 2px;
+  background: var(--accent);
+}
+
+.repos {
+  display: flex;
+  flex-direction: column;
+}
+.repos li + li {
+  border-top: 1px solid var(--line);
+}
+.repo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 0;
+}
+.repoTitle {
+  font-weight: 700;
+  font-size: 19px;
+  transition: color 0.2s var(--ease);
+}
+.repo:hover .repoTitle {
+  color: var(--accent);
+}
+.repoBody {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--fg-2);
+}
+
+@media (max-width: 1100px) {
+  .agents {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  /* Waterfall: one step under the other, the flow running down between them. */
+  .steps {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+  }
+  .step {
+    padding: 0 0 78px;
+  }
+  .step:last-child {
+    padding-bottom: 0;
+  }
+  .step:not(:last-child)::after {
+    top: auto;
+    bottom: 16px;
+    left: calc(50% - 1px);
+    width: 2px;
+    height: 46px;
+    background: repeating-linear-gradient(180deg, var(--flow) 0 8px, transparent 8px 14px);
+    background-size: 2px 14px;
+    animation-name: flow-y;
+  }
+  .step:not(:last-child)::before {
+    top: auto;
+    bottom: 6px;
+    left: calc(50% - 6px);
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 9px solid var(--flow);
+    border-bottom: 0;
+  }
+}
+@media (max-width: 800px) {
+  .duo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .agents {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
